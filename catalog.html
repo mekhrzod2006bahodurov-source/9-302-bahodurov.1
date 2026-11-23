@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Каталог — Мясной двор «Сибирский»</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="../index.html">Мясной двор «Сибирский»</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Меню">☰</button>
+    <nav class="nav" id="nav">
+      <a href="../production/index.html">Производство</a>
+      <a href="../catalog/index.html" class="active">Каталог</a>
+      <a href="../certificates/index.html">Сертификаты</a>
+      <a href="../partners/index.html">Сотрудничество</a>
+      <a href="../shops/index.html">Где купить</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container page-title">
+    <h1>Каталог продукции</h1>
+    <p class="lead">Выберите группу, чтобы увидеть нужные позиции.</p>
+  </div>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="filters" id="filters"></div>
+      <div class="grid" id="products"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    © 2026 Мясной двор «Сибирский». Новосибирск, ул. Мельничная, 14.
+  </div>
+</footer>
+<script src="../script.js"></script>
+<script>
+var products = [
+  { name: 'Говядина охлаждённая, вырезка', group: 'Мясо', weight: '1 кг', shelf: '5 суток', note: 'ГОСТ 34120' },
+  { name: 'Свинина, шейка', group: 'Мясо', weight: '1 кг', shelf: '5 суток', note: 'ГОСТ 31476' },
+  { name: 'Куриная грудка', group: 'Мясо', weight: '1 кг', shelf: '5 суток', note: 'ГОСТ 31473' },
+  { name: 'Докторская варёная колбаса', group: 'Колбасы', weight: '450 г', shelf: '20 суток', note: 'ГОСТ 23670' },
+  { name: 'Сервелат копчёный', group: 'Колбасы', weight: '350 г', shelf: '45 суток', note: 'ГОСТ 33291' },
+  { name: 'Сосиски молочные', group: 'Колбасы', weight: '400 г', shelf: '15 суток', note: 'ГОСТ 31498' },
+  { name: 'Пельмени «Сибирские»', group: 'Полуфабрикаты', weight: '800 г', shelf: '6 месяцев', note: 'ГОСТ 33394' },
+  { name: 'Котлеты домашние', group: 'Полуфабрикаты', weight: '500 г', shelf: '3 месяца', note: 'ГОСТ 32951' },
+  { name: 'Фарш говяжий', group: 'Полуфабрикаты', weight: '500 г', shelf: '48 часов', note: 'ГОСТ 32951' },
+  { name: 'Окорок варёно-копчёный', group: 'Деликатесы', weight: '300 г', shelf: '30 суток', note: 'ГОСТ 32244' },
+  { name: 'Бекон сырокопчёный', group: 'Деликатесы', weight: '150 г', shelf: '30 суток', note: 'ТУ 10.13-001' },
+  { name: 'Паштет печёночный', group: 'Деликатесы', weight: '200 г', shelf: '60 суток', note: 'ГОСТ 31490' }
+];
+var groups = ['Все', 'Мясо', 'Колбасы', 'Полуфабрикаты', 'Деликатесы'];
+var currentGroup = 'Все';
+
+function showFilters() {
+  var box = document.getElementById('filters');
+  box.innerHTML = '';
+  groups.forEach(function (g) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = g;
+    b.className = (g === currentGroup) ? 'active' : '';
+    b.onclick = function () {
+      currentGroup = g;
+      showFilters();
+      showProducts();
+    };
+    box.appendChild(b);
+  });
+}
+
+function showProducts() {
+  var box = document.getElementById('products');
+  box.innerHTML = '';
+  products.forEach(function (p) {
+    if (currentGroup !== 'Все' && p.group !== currentGroup) return;
+    var d = document.createElement('div');
+    d.className = 'card product';
+    d.innerHTML =
+      '<span class="kind"></span><h3></h3>' +
+      '<div class="info"><span class="w"></span><span class="s"></span><span class="n"></span></div>';
+    d.querySelector('.kind').textContent = p.group;
+    d.querySelector('h3').textContent = p.name;
+    d.querySelector('.w').textContent = p.weight;
+    d.querySelector('.s').textContent = 'Срок: ' + p.shelf;
+    d.querySelector('.n').textContent = p.note;
+    box.appendChild(d);
+  });
+}
+
+showFilters();
+showProducts();
+</script>
+</body>
+</html>

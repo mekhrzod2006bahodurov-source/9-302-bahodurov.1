@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Где купить — Мясной двор «Сибирский»</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="../index.html">Мясной двор «Сибирский»</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Меню">☰</button>
+    <nav class="nav" id="nav">
+      <a href="../production/index.html">Производство</a>
+      <a href="../catalog/index.html">Каталог</a>
+      <a href="../certificates/index.html">Сертификаты</a>
+      <a href="../partners/index.html">Сотрудничество</a>
+      <a href="../shops/index.html" class="active">Где купить</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container page-title">
+    <h1>Где купить</h1>
+    <p class="lead">В этих магазинах продаётся наша продукция.</p>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <label class="district-label">
+        Район
+        <select id="district" class="select-sm"></select>
+      </label>
+      <div class="grid" id="shoplist"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    © 2026 Мясной двор «Сибирский». Новосибирск, ул. Мельничная, 14.
+  </div>
+</footer>
+<script src="../script.js"></script>
+<script>
+var shops = [
+  { name: 'Гастроном «Берёзка»', addr: 'ул. Ленина, 21', district: 'Центральный', time: '8:00–22:00', cats: ['Мясо', 'Колбасы', 'Деликатесы'] },
+  { name: 'Магазин «Продукты у дома»', addr: 'Красный пр., 98', district: 'Центральный', time: '7:00–23:00', cats: ['Колбасы', 'Полуфабрикаты'] },
+  { name: 'Супермаркет «Сосновый»', addr: 'ул. Дуси Ковальчук, 244', district: 'Заельцовский', time: '8:00–23:00', cats: ['Мясо', 'Колбасы', 'Полуфабрикаты', 'Деликатесы'] },
+  { name: 'Мясная лавка «Хуторок»', addr: 'ул. Залесского, 5', district: 'Заельцовский', time: '8:00–20:00', cats: ['Мясо', 'Полуфабрикаты'] },
+  { name: 'Супермаркет «Сосновый»', addr: 'ул. Выборная, 99', district: 'Октябрьский', time: '8:00–23:00', cats: ['Мясо', 'Колбасы', 'Полуфабрикаты', 'Деликатесы'] },
+  { name: 'Магазин «Продукты у дома»', addr: 'Октябрьская магистраль, 3', district: 'Октябрьский', time: '7:00–23:00', cats: ['Колбасы', 'Полуфабрикаты'] },
+  { name: 'Мясная лавка «Хуторок»', addr: 'ул. Станционная, 30', district: 'Ленинский', time: '8:00–20:00', cats: ['Мясо', 'Колбасы'] },
+  { name: 'Гастроном «Берёзка»', addr: 'ул. Кирова, 44', district: 'Ленинский', time: '8:00–22:00', cats: ['Мясо', 'Колбасы', 'Деликатесы'] },
+  { name: 'Супермаркет «Сосновый»', addr: 'ул. Титова, 29', district: 'Калининский', time: '8:00–23:00', cats: ['Мясо', 'Колбасы', 'Полуфабрикаты'] },
+  { name: 'Магазин «Продукты у дома»', addr: 'ул. Народная, 11', district: 'Калининский', time: '7:00–23:00', cats: ['Колбасы', 'Полуфабрикаты', 'Деликатесы'] }
+];
+var districts = ['Все районы', 'Центральный', 'Заельцовский', 'Октябрьский', 'Ленинский', 'Калининский'];
+var sel = document.getElementById('district');
+districts.forEach(function (d) {
+  var o = document.createElement('option');
+  o.textContent = d;
+  sel.appendChild(o);
+});
+
+function showShops() {
+  var box = document.getElementById('shoplist');
+  box.innerHTML = '';
+  shops.forEach(function (s) {
+    if (sel.value !== 'Все районы' && s.district !== sel.value) return;
+    var d = document.createElement('div');
+    d.className = 'card';
+    d.innerHTML =
+      '<div class="shop-head"><h3></h3><span class="time"></span></div>' +
+      '<p class="a" style="color:var(--muted);font-size:.93rem;margin:6px 0"></p>' +
+      '<div class="tags"></div>';
+    d.querySelector('h3').textContent = s.name;
+    d.querySelector('.time').textContent = s.time;
+    d.querySelector('.a').textContent = 'г. Новосибирск, ' + s.addr + ' (' + s.district + ' район)';
+    s.cats.forEach(function (c) {
+      var t = document.createElement('span');
+      t.className = 'tag';
+      t.textContent = c;
+      d.querySelector('.tags').appendChild(t);
+    });
+    box.appendChild(d);
+  });
+}
+sel.addEventListener('change', showShops);
+showShops();
+</script>
+</body>
+</html>

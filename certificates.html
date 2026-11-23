@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Сертификаты — Мясной двор «Сибирский»</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="../index.html">Мясной двор «Сибирский»</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Меню">☰</button>
+    <nav class="nav" id="nav">
+      <a href="../production/index.html">Производство</a>
+      <a href="../catalog/index.html">Каталог</a>
+      <a href="../certificates/index.html" class="active">Сертификаты</a>
+      <a href="../partners/index.html">Сотрудничество</a>
+      <a href="../shops/index.html">Где купить</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container page-title">
+    <h1>Сертификаты соответствия</h1>
+    <p class="lead">Продукция соответствует техническим регламентам Таможенного союза. Предприятие работает по системе ХАССП.</p>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid" id="certs"></div>
+      <p class="demo-mark">Номера и даты в карточках приведены как образец (учебный сайт).</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    © 2026 Мясной двор «Сибирский». Новосибирск, ул. Мельничная, 14.
+  </div>
+</footer>
+<script src="../script.js"></script>
+<script>
+var certs = [
+  { badge: 'ТР ТС', title: 'Декларация соответствия на колбасные изделия', text: 'Соответствие ТР ТС 021/2011 и ТР ТС 034/2013', num: 'ЕАЭС N RU Д-RU.АБ12.В.00123/26', area: 'Колбасы варёные и копчёные', date: 'до 15.03.2028' },
+  { badge: 'ХАССП', title: 'Сертификат системы ХАССП', text: 'Система менеджмента безопасности пищевой продукции', num: 'РОСС RU.ХАССП.00145', area: 'Всё производство', date: 'до 01.09.2027' },
+  { badge: 'Меркурий', title: 'Ветеринарное свидетельство', text: 'Оформляется в системе «Меркурий» на каждую партию', num: 'Электронный документ', area: 'Каждая отгрузка', date: 'на партию' }
+];
+var cbox = document.getElementById('certs');
+certs.forEach(function (c) {
+  var d = document.createElement('div');
+  d.className = 'cert';
+  d.innerHTML =
+    '<span class="badge"></span><h3></h3>' +
+    '<p class="t" style="color:var(--muted);font-size:.9rem;margin:0 0 8px"></p><dl></dl>';
+  d.querySelector('.badge').textContent = c.badge;
+  d.querySelector('h3').textContent = c.title;
+  d.querySelector('.t').textContent = c.text;
+  var dl = d.querySelector('dl');
+  [['Номер', c.num], ['Охват', c.area], ['Действует', c.date]].forEach(function (r) {
+    var dt = document.createElement('dt');
+    dt.textContent = r[0];
+    var dd = document.createElement('dd');
+    dd.textContent = r[1];
+    dl.appendChild(dt);
+    dl.appendChild(dd);
+  });
+  cbox.appendChild(d);
+});
+</script>
+</body>
+</html>

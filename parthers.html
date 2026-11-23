@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Сотрудничество — Мясной двор «Сибирский»</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="../index.html">Мясной двор «Сибирский»</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Меню">☰</button>
+    <nav class="nav" id="nav">
+      <a href="../production/index.html">Производство</a>
+      <a href="../catalog/index.html">Каталог</a>
+      <a href="../certificates/index.html">Сертификаты</a>
+      <a href="../partners/index.html" class="active">Сотрудничество</a>
+      <a href="../shops/index.html">Где купить</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container page-title">
+    <h1>Сотрудничество</h1>
+    <p class="lead">Мы покупаем сырьё у ферм и поставляем готовую продукцию в магазины и кафе.</p>
+  </div>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="two-col">
+        <div>
+          <h3>Поставщикам сырья</h3>
+          <p>Принимаем скот, мясо в полутушах, птицу и специи. Требования:</p>
+          <ul>
+            <li>ветеринарные сопроводительные документы в системе «Меркурий»;</li>
+            <li>холодовая цепь при перевозке не выше +4 °C;</li>
+            <li>результаты исследований на антибиотики и остаточные вещества;</li>
+            <li>регистрация хозяйства и клеймение животных.</li>
+          </ul>
+          <h3>Условия для магазинов и кафе</h3>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Минимальный заказ</th><td>от 100 кг на точку</td></tr>
+              <tr><th>Доставка</th><td>Своим рефрижератором, ежедневно 5:00–10:00</td></tr>
+              <tr><th>Зона доставки</th><td>Новосибирск и область до 150 км</td></tr>
+              <tr><th>Оплата</th><td>Отсрочка до 10 дней для постоянных клиентов</td></tr>
+              <tr><th>Заказ</th><td>До 16:00 накануне доставки</td></tr>
+              <tr><th>Документы</th><td>Накладная, ветсправка, декларация соответствия</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <form id="form" class="form" novalidate>
+          <h3>Заявка на сотрудничество</h3>
+          <label>
+            Вы
+            <select id="type">
+              <option>Поставщик сырья</option>
+              <option>Магазин или сеть</option>
+              <option>Кафе или ресторан</option>
+            </select>
+          </label>
+          <label>
+            Организация
+            <input id="company" type="text" placeholder="ООО «Название»" autocomplete="organization">
+            <span class="error" id="e-company"></span>
+          </label>
+          <label>
+            Контактное лицо
+            <input id="person" type="text" placeholder="Иван Петров" autocomplete="name">
+            <span class="error" id="e-person"></span>
+          </label>
+          <label>
+            Телефон
+            <input id="phone" type="tel" placeholder="+7 383 000-00-00" autocomplete="tel">
+            <span class="error" id="e-phone"></span>
+          </label>
+          <label>
+            Объём в неделю, кг
+            <input id="volume" inputmode="numeric" placeholder="300">
+            <span class="error" id="e-volume"></span>
+          </label>
+          <button class="btn" type="submit">Отправить заявку</button>
+          <div id="result" class="result" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    © 2026 Мясной двор «Сибирский». Новосибирск, ул. Мельничная, 14.
+  </div>
+</footer>
+<script src="../script.js"></script>
+<script>
+document.getElementById('form').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var company = document.getElementById('company').value.trim();
+  var person = document.getElementById('person').value.trim();
+  var phone = document.getElementById('phone').value.trim();
+  var volume = document.getElementById('volume').value.trim();
+  var ok = true;
+
+  document.getElementById('e-company').textContent = '';
+  document.getElementById('e-person').textContent = '';
+  document.getElementById('e-phone').textContent = '';
+  document.getElementById('e-volume').textContent = '';
+
+  if (company.length < 2) {
+    document.getElementById('e-company').textContent = 'Введите название организации';
+    ok = false;
+  }
+  if (person.length < 2) {
+    document.getElementById('e-person').textContent = 'Введите имя';
+    ok = false;
+  }
+  if (phone.replace(/\D/g, '').length < 10) {
+    document.getElementById('e-phone').textContent = 'В телефоне должно быть не меньше 10 цифр';
+    ok = false;
+  }
+  if (!/^\d+$/.test(volume) || Number(volume) < 1) {
+    document.getElementById('e-volume').textContent = 'Введите объём числом';
+    ok = false;
+  }
+
+  var res = document.getElementById('result');
+  if (!ok) {
+    res.innerHTML = '';
+    return;
+  }
+  res.innerHTML = '<div class="ok"></div>';
+  res.firstChild.textContent =
+    'Заявка принята: ' + company + ', ' +
+    document.getElementById('type').value.toLowerCase() + ', ' +
+    volume + ' кг в неделю. Менеджер свяжется с вами в течение рабочего дня. (Учебный сайт: данные никуда не отправляются.)';
+});
+</script>
+</body>
+</html>
